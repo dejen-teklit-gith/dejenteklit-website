@@ -1,0 +1,17 @@
+<h2>Checkout</h2>
+
+<div *ngFor="let item of cartItems">
+  <p>{{ item.name }} - ${{ item.price }}</p>
+</div>
+
+<hr>
+
+<input
+  type="email"
+  [(ngModel)]="customerEmail"
+  placeholder="Enter your email"
+/>
+
+<br /><br />
+
+<button (click)="checkout()">Pay with Card</button>

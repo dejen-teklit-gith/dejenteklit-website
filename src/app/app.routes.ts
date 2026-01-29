@@ -7,7 +7,7 @@ import { BookingComponent } from './pages/booking/booking';
 import { ContactComponent } from './pages/contact/contact';
 import { SuccessComponent } from './pages/success/success.component';
 import { CancelComponent } from './pages/cancel/cancel.component';
-
+import { CheckoutComponent } from './checkout/checkout.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
@@ -17,4 +17,5 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'success', component: SuccessComponent },
   { path: 'cancel', component: CancelComponent },
+  { path: 'checkout', component: CheckoutComponent },
 ];
