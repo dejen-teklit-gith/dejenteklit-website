@@ -1,0 +1,36 @@
+.footer {
+  background: #111;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.links, .social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+a:hover {
+  color: #f39c12;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.8rem;
+  color: #777;
+}

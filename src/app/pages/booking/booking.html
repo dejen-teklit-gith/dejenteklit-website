@@ -1,0 +1,18 @@
+<section class="booking">
+  <h2>Book Dejen for Your Event</h2>
+
+  <form [formGroup]="bookingForm"
+        (ngSubmit)="onSubmit()"
+        class="booking-form"
+        action="https://formspree.io/f/mzdgzrlr"
+        method="POST">
+
+    <input type="text" formControlName="fullName" name="fullName" placeholder="Full Name" required />
+    <input type="email" formControlName="email" name="email" placeholder="Email Address" required />
+    <input type="text" formControlName="eventType" name="eventType" placeholder="Event Type (Wedding, Festival, Concert...)" required />
+    <input type="date" formControlName="date" name="date" required />
+    <textarea formControlName="message" name="message" placeholder="Tell me about your event..." rows="5"></textarea>
+
+    <button type="submit">Send Booking Request</button>
+  </form>
+</section>

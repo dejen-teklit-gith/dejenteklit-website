@@ -1,0 +1,40 @@
+<!-- OVERLAY -->
+<div
+  class="cart-overlay"
+  *ngIf="cartService.isOpen"
+  (click)="cartService.toggleCart()">
+</div>
+
+<div class="cart-drawer" [class.open]="cartService.isOpen">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button (click)="cartService.toggleCart()">✕</button>
+  </div>
+
+  <div class="cart-body"
+       *ngIf="cartService.getItems().length > 0; else emptyCart">
+
+    <div class="cart-item"
+         *ngFor="let item of cartService.getItems(); let i = index">
+
+      <img [src]="item.image" />
+
+      <div class="info">
+        <p>{{ item.name }}</p>
+        <p>${{ item.price }}</p>
+      </div>
+
+      <button (click)="cartService.removeItem(i)">Remove</button>
+    </div>
+
+    <div class="cart-footer">
+      <h4>Total: ${{ cartService.getTotal() }}</h4>
+      <button class="checkout" (click)="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- ✅ THIS WAS MISSING -->
+  <ng-template #emptyCart>
+    <p class="empty">Your cart is empty</p>
+  </ng-template>
+</div>

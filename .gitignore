@@ -1,17 +1,35 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
+# ================================
+# Angular / Build
+# ================================
 /dist
 /tmp
 /out-tsc
 /bazel-out
+/.angular/cache
+/coverage
 
+# ================================
 # Node
+# ================================
 /node_modules
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
+# ================================
+# Environment & Secrets (VERY IMPORTANT)
+# ================================
+.env
+backend/.env
+
+# ================================
+# Local Database (orders we will save)
+# ================================
+orders.db
+backend/orders.db
+
+# ================================
+# IDEs and Editors
+# ================================
 .idea/
 .project
 .classpath
@@ -20,7 +38,7 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
+# VS Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -29,16 +47,18 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
+# ================================
+# Misc
+# ================================
 .sass-cache/
 /connect.lock
-/coverage
 /libpeerconnection.log
 testem.log
 /typings
 __screenshots__/
 
+# ================================
 # System files
+# ================================
 .DS_Store
 Thumbs.db

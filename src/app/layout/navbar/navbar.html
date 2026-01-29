@@ -1,0 +1,65 @@
+<nav class="navbar">
+  <!-- LEFT -->
+  <div class="nav-left">
+    <a routerLink="/">HOME</a>
+    <a routerLink="/shop">COLLECTIONS</a>
+    <a routerLink="/music">MUSIC</a>
+  </div>
+
+  <!-- LOGO CENTER -->
+  <div class="logo">DEJEN</div>
+
+  <!-- RIGHT -->
+  <div class="nav-right">
+    <lucide-icon [img]="Mail"></lucide-icon>
+    <lucide-icon [img]="Search"></lucide-icon>
+    <lucide-icon [img]="User"></lucide-icon>
+
+    <!-- 🛒 CART ICON -->
+    <div
+      class="cart-wrapper"
+      (click)="toggleCart()"
+      [class.bump]="cartService.animateCart"
+    >
+      <lucide-icon [img]="ShoppingCart"></lucide-icon>
+
+      <span class="cart-count" *ngIf="cartService.getCount() > 0">
+    {{ cartService.getCount() }}
+  </span>
+    </div>
+  </div>
+
+  <!-- 🍔 Hamburger -->
+  <div class="hamburger" (click)="toggleMenu()">
+    <lucide-icon *ngIf="!menuOpen" [img]="Menu"></lucide-icon>
+    <lucide-icon *ngIf="menuOpen" [img]="X"></lucide-icon>
+  </div>
+</nav>
+
+<!-- 📱 MOBILE MENU -->
+<div class="mobile-menu" *ngIf="menuOpen">
+  <a routerLink="/" (click)="toggleMenu()">HOME</a>
+  <a routerLink="/shop" (click)="toggleMenu()">COLLECTIONS</a>
+  <a routerLink="/music" (click)="toggleMenu()">MUSIC</a>
+
+  <div class="mobile-icons">
+    <lucide-icon [img]="Mail"></lucide-icon>
+    <lucide-icon [img]="Search"></lucide-icon>
+    <lucide-icon [img]="User"></lucide-icon>
+
+    <!-- MOBILE CART -->
+    <div
+      class="cart-wrapper"
+      (click)="cartService.toggleCart(); toggleMenu()"
+    >
+      <lucide-icon [img]="ShoppingCart"></lucide-icon>
+
+      <span
+        class="cart-count"
+        *ngIf="cartService.getItems().length > 0"
+      >
+        {{ cartService.getItems().length }}
+      </span>
+    </div>
+  </div>
+</div>
