@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-success',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './success.component.html',
   styleUrls: ['./success.component.scss'],
 })
 export class SuccessComponent implements OnInit {
 
-  constructor(private cartService: CartService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // ✅ Clear cart after successful payment
-    this.cartService.clearCart();
+    // Show popup for 2.5 seconds, then go to shop
+    setTimeout(() => {
+      this.router.navigate(['/shop']);
+    }, 1000);
   }
 }

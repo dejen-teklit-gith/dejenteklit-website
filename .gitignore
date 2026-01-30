@@ -18,6 +18,8 @@ yarn-error.log
 # ================================
 # Environment & Secrets (VERY IMPORTANT)
 # ================================
+node_modules
+dist
 .env
 backend/.env
 
