@@ -1,0 +1,98 @@
+/* PAGE */
+.account-page {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* AUTH LAYOUT */
+.auth-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 70px;
+  align-items: start;
+}
+
+/* LEFT / RIGHT */
+.auth-left,
+.auth-right {
+  display: flex;
+  justify-content: center;
+}
+
+/* VERTICAL DIVIDER */
+.auth-divider {
+  width: 3px;
+  background: #000;
+  border-radius: 2px;
+  min-height: 520px;
+}
+
+/* RETURN TO STORE — single underline only */
+.return-store-wrapper {
+  margin-top: 32px; /* closer to forms */
+}
+
+/* RETURN TO STORE — real link */
+.return-store-wrapper {
+  margin-top: 32px;
+}
+
+.return-store {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0a0a2a;            /* deep black-blue */
+  cursor: pointer;          /* 🔑 makes it feel clickable */
+  text-decoration: none;    /* remove default underline */
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #0a0a2a; /* underline = link affordance */
+}
+
+/* Hover = still a link, no extra line */
+
+.return-store-wrapper {
+  margin-top: 32px;
+}
+
+.return-store {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0a0a2a;
+  cursor: pointer;
+
+  /* 🔴 KILL ALL OTHER UNDERLINES */
+  text-decoration: none !important;
+  border-bottom: none !important;
+
+  /* ✅ SINGLE, SOFT UNDERLINE */
+  background-image: linear-gradient(#0a0a2a, #0a0a2a);
+  background-size: 100% 1px;      /* thin line */
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  padding-bottom: 3px;
+}
+
+.return-store:hover {
+  opacity: 0.85;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .auth-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .auth-divider {
+    display: none;
+  }
+
+  .auth-left,
+  .auth-right {
+    justify-content: flex-start;
+  }
+}

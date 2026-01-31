@@ -1,0 +1,33 @@
+<form (ngSubmit)="submit()" class="auth-form">
+  <h2>Create account</h2>
+
+  <div class="field">
+    <label>First name</label>
+    <input type="text" [(ngModel)]="form.firstName" name="firstName" required />
+  </div>
+
+  <div class="field">
+    <label>Last name</label>
+    <input type="text" [(ngModel)]="form.lastName" name="lastName" required />
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" [(ngModel)]="form.email" name="email" required />
+  </div>
+
+  <div class="field">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="form.password" name="password" required />
+  </div>
+
+  <ul class="password-rules">
+    <li>Password must be at least 8 characters</li>
+    <li>Password must contain a number</li>
+    <li>Password must contain upper & lowercase characters</li>
+  </ul>
+
+  <button type="submit">Create</button>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+</form>

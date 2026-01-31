@@ -1,0 +1,41 @@
+<div class="account-page">
+
+  <!-- ⏳ LOADING -->
+  <p *ngIf="loading">Loading…</p>
+
+  <!-- ❌ NOT LOGGED IN -->
+  <ng-container *ngIf="!loading && !user">
+
+    <div class="auth-wrapper">
+
+      <!-- LEFT: SIGN IN -->
+      <div class="auth-left">
+        <app-login (loggedIn)="reloadAccount()"></app-login>
+      </div>
+
+      <!-- VERTICAL DIVIDER -->
+      <div class="auth-divider"></div>
+
+      <!-- RIGHT: REGISTER -->
+      <div class="auth-right">
+        <app-register (registered)="reloadAccount()"></app-register>
+      </div>
+
+    </div>
+
+    <!-- ⬅️ BOTTOM LEFT RETURN -->
+    <div class="return-store-wrapper">
+      <a routerLink="/shop" class="return-store">
+        &lt; Return to Store
+      </a>
+    </div>
+  </ng-container>
+
+  <!-- ✅ LOGGED IN -->
+  <ng-container *ngIf="!loading && user">
+    <h1>My Account</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <button (click)="logout()">Logout</button>
+  </ng-container>
+
+</div>

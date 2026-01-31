@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { LucideAngularModule, Mail, Search, User,
+import { RouterModule, Router } from '@angular/router';
+import {
+  LucideAngularModule,
+  Mail,
+  Search,
+  User,
   ShoppingCart,
   Menu,
-  X } from 'lucide-angular';
+  X,
+} from 'lucide-angular';
+
 import { CartService } from '../../services/cart';
 import { SubscribeService } from '../../services/subscribe.service';
 
@@ -27,17 +33,27 @@ export class NavbarComponent {
 
   constructor(
     public cartService: CartService,
-    private subscribeService: SubscribeService // Inject the service
+    private router: Router,
+    private subscribeService: SubscribeService
   ) {}
-  openSubscribe() {
+
+  // 📧 Subscribe popup
+  openSubscribe(): void {
     this.subscribeService.open();
   }
-  toggleMenu() {
+
+  // 🍔 Mobile menu
+  toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
-  toggleCart() {
+  // 🛒 Cart
+  toggleCart(): void {
     this.cartService.toggleCart();
   }
 
+  // 👤 User / Account
+  goToAccount(): void {
+    this.router.navigate(['/account']);
+  }
 }

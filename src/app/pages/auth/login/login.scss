@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+/* FORM */
+.auth-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  max-width: 420px;
+}
+
+/* TITLE */
+.auth-form h2 {
+  margin-bottom: 36px !important;
+}
+
+/* FIELD = LABEL + INPUT BLOCK */
+.field {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 32px !important; /* 🔥 BIG SPACE */
+}
+
+/* LABEL */
+.field label {
+  margin-bottom: 10px !important;
+  font-size: 14px;
+}
+
+/* INPUT */
+.field input {
+  padding: 14px 12px;
+  font-size: 14px;
+  display: block !important;
+}
+
+/* SIGN IN BUTTON */
+.auth-form button[type="submit"] {
+  margin-top: 8px !important;
+  margin-bottom: 28px !important; /* 🔥 SPACE BEFORE FORGOT */
+  padding: 14px;
+}
+
+/* FORGOT PASSWORD */
+.auth-links {
+  margin-top: 0 !important;
+}
+
+.link-btn {
+  display: inline-block;
+  margin-top: 0;
+  font-size: 13px;
+}

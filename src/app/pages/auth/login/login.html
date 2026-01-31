@@ -1,0 +1,21 @@
+<form (ngSubmit)="submit()" class="auth-form">
+  <h2>Sign in to your existing account</h2>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" [(ngModel)]="email" name="email" />
+  </div>
+
+  <div class="field">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" name="password" />
+  </div>
+
+  <button type="submit">SIGN IN</button>
+
+  <div class="auth-links">
+    <button type="button" class="link-btn" (click)="forgotPassword()">
+      Forgot your password?
+    </button>
+  </div>
+</form>

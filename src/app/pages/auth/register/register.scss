@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+/* FORM */
+.auth-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  max-width: 420px;
+}
+
+/* TITLE */
+.auth-form h2 {
+  margin-bottom: 36px !important;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* FIELD BLOCKS */
+.field {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 32px !important; /* 🔥 same spacing as login */
+}
+
+/* LABEL */
+.field label {
+  margin-bottom: 10px !important;
+  font-size: 14px;
+  color: #111;
+}
+
+/* INPUT */
+.field input {
+  padding: 14px 12px;
+  font-size: 14px;
+  display: block !important;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+/* PASSWORD RULES */
+.password-rules {
+  margin-top: -10px; /* pulls closer to password field */
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+  padding-left: 18px;
+}
+
+/* SUBMIT BUTTON */
+.auth-form button[type="submit"] {
+  margin-top: 8px !important;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+/* ERROR */
+.error {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #c00;
+}
+
