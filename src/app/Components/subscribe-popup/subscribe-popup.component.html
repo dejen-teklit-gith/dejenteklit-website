@@ -1,0 +1,13 @@
+<div class="overlay" *ngIf="visible">
+  <div class="popup">
+    <h3>Join Dejen Community 🎶</h3>
+
+    <input [(ngModel)]="email" placeholder="Enter your email" />
+
+    <button (click)="subscribe()">Subscribe</button>
+
+    <p>{{ message }}</p>
+
+    <span class="close" (click)="close()">×</span>
+  </div>
+</div>

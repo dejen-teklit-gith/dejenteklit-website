@@ -1,6 +1,15 @@
 <app-navbar></app-navbar>
+
 <router-outlet></router-outlet>
+
 <app-footer></app-footer>
+<!-- CART DRAWER (ONLY ONCE) -->
+<app-cart-drawer></app-cart-drawer>
+
+
+<!-- ✅ GLOBAL COMPONENTS AT THE VERY BOTTOM -->
+
+<app-subscribe-popup #subscribePopup></app-subscribe-popup>
 
 <!-- OVERLAY -->
 <div
@@ -9,11 +18,10 @@
   (click)="cartService.toggleCart()">
 </div>
 
-<!-- CART DRAWER -->
+<!-- CART DRAWER (ONLY ONCE) -->
 <app-cart-drawer></app-cart-drawer>
+
 <!-- TOAST MESSAGE -->
 <div class="toast" *ngIf="cartService.toast$ | async">
   Item added to cart ✓
 </div>
-<!-- CART DRAWER lives globally -->
-<app-cart-drawer [checkout]="checkout"></app-cart-drawer>

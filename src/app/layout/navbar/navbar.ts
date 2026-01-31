@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, Mail, Search, User, ShoppingCart, Menu, X } from 'lucide-angular';
+import { LucideAngularModule, Mail, Search, User,
+  ShoppingCart,
+  Menu,
+  X } from 'lucide-angular';
 import { CartService } from '../../services/cart';
-
-
+import { SubscribeService } from '../../services/subscribe.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,8 +25,13 @@ export class NavbarComponent {
   readonly Menu = Menu;
   readonly X = X;
 
-  constructor(public cartService: CartService) {}
-
+  constructor(
+    public cartService: CartService,
+    private subscribeService: SubscribeService // Inject the service
+  ) {}
+  openSubscribe() {
+    this.subscribeService.open();
+  }
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }

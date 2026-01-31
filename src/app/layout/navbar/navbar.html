@@ -5,13 +5,12 @@
     <a routerLink="/shop">COLLECTIONS</a>
     <a routerLink="/music">MUSIC</a>
   </div>
-
   <!-- LOGO CENTER -->
   <div class="logo">DEJEN</div>
 
   <!-- RIGHT -->
   <div class="nav-right">
-    <lucide-icon [img]="Mail"></lucide-icon>
+    <lucide-icon [img]="Mail" (click)="openSubscribe()"></lucide-icon>
     <lucide-icon [img]="Search"></lucide-icon>
     <lucide-icon [img]="User"></lucide-icon>
 
@@ -54,12 +53,10 @@
     >
       <lucide-icon [img]="ShoppingCart"></lucide-icon>
 
-      <span
-        class="cart-count"
-        *ngIf="cartService.getItems().length > 0"
-      >
-        {{ cartService.getItems().length }}
-      </span>
+      <span class="cart-count" *ngIf="cartService.getCount() > 0">
+    {{ cartService.getCount() }}
+  </span>
+
     </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
-import {effect, Input} from '@angular/core';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart';
 
@@ -11,16 +10,5 @@ import { CartService } from '../../services/cart';
   styleUrls: ['./cart-drawer.scss'],
 })
 export class CartDrawerComponent {
-
-  @Input() checkout!: () => void
-  constructor(public cartService: CartService) {
-
-    effect(() => {
-      if (this.cartService.isOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = 'auto';
-      }
-    });
-  }
+  constructor(public cartService: CartService) {}
 }

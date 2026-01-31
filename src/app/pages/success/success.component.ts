@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart'; // ✅ correct import
 
 @Component({
   selector: 'app-success',
@@ -9,10 +10,13 @@ import { Router } from '@angular/router';
 })
 export class SuccessComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public cartService: CartService) {}
 
   ngOnInit(): void {
-    // Show popup for 2.5 seconds, then go to shop
+    // Clear the cart after successful payment
+    this.cartService.clearCart();
+
+    // Redirect to shop after 1 second
     setTimeout(() => {
       this.router.navigate(['/shop']);
     }, 1000);
