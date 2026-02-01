@@ -1,0 +1,36 @@
+<div class="profile-page">
+
+  <p *ngIf="loading">Loading profile…</p>
+
+  <div *ngIf="!loading && user">
+
+    <h2>My Information</h2>
+
+    <div class="profile-row">
+      <span class="label">Full name</span>
+      <span class="value">
+        {{ user.first_name }} {{ user.last_name }}
+      </span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Email</span>
+      <span class="value">{{ user.email }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Customer ID</span>
+      <span class="value">{{ user.id }}</span>
+    </div>
+
+    <!-- future -->
+    <!--
+    <div class="profile-row">
+      <span class="label">Language</span>
+      <span class="value">English</span>
+    </div>
+    -->
+
+  </div>
+
+</div>

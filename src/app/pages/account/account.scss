@@ -1,4 +1,6 @@
-/* PAGE */
+/* =========================
+   PAGE
+========================= */
 .account-page {
   max-width: 1200px;
   margin: 80px auto;
@@ -8,7 +10,9 @@
   flex-direction: column;
 }
 
-/* AUTH LAYOUT */
+/* =========================
+   AUTH LAYOUT
+========================= */
 .auth-wrapper {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -16,14 +20,12 @@
   align-items: start;
 }
 
-/* LEFT / RIGHT */
 .auth-left,
 .auth-right {
   display: flex;
   justify-content: center;
 }
 
-/* VERTICAL DIVIDER */
 .auth-divider {
   width: 3px;
   background: #000;
@@ -31,29 +33,9 @@
   min-height: 520px;
 }
 
-/* RETURN TO STORE — single underline only */
-.return-store-wrapper {
-  margin-top: 32px; /* closer to forms */
-}
-
-/* RETURN TO STORE — real link */
-.return-store-wrapper {
-  margin-top: 32px;
-}
-
-.return-store {
-  font-size: 13px;
-  font-weight: 500;
-  color: #0a0a2a;            /* deep black-blue */
-  cursor: pointer;          /* 🔑 makes it feel clickable */
-  text-decoration: none;    /* remove default underline */
-  display: inline-block;
-  padding-bottom: 3px;
-  border-bottom: 2px solid #0a0a2a; /* underline = link affordance */
-}
-
-/* Hover = still a link, no extra line */
-
+/* =========================
+   RETURN TO STORE LINK
+========================= */
 .return-store-wrapper {
   margin-top: 32px;
 }
@@ -63,24 +45,77 @@
   font-weight: 500;
   color: #0a0a2a;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  padding-bottom: 3px;
 
-  /* 🔴 KILL ALL OTHER UNDERLINES */
-  text-decoration: none !important;
-  border-bottom: none !important;
-
-  /* ✅ SINGLE, SOFT UNDERLINE */
+  /* single elegant underline */
   background-image: linear-gradient(#0a0a2a, #0a0a2a);
-  background-size: 100% 1px;      /* thin line */
+  background-size: 100% 1px;
   background-repeat: no-repeat;
   background-position: left 100%;
-  padding-bottom: 3px;
 }
 
 .return-store:hover {
   opacity: 0.85;
 }
 
-/* MOBILE */
+/* =========================
+   ORDERS (PROFESSIONAL)
+========================= */
+.order-card {
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #666;
+}
+
+.order-number {
+  font-weight: 500;
+}
+
+.order-summary {
+  margin: 6px 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.order-total {
+  font-weight: 600;
+}
+
+.order-status {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.order-status.paid {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.view-details {
+  margin-left: auto;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 900px) {
   .auth-wrapper {
     grid-template-columns: 1fr;

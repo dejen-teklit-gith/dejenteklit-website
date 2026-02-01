@@ -2,5 +2,9 @@
   <div class="success-toast">
     <h2>Payment Successful! 🎉</h2>
     <p>Thank you for your purchase.</p>
+
+    <p *ngIf="!loggedIn" class="hint">
+      You can create an account later to track your order.
+    </p>
   </div>
 </div>

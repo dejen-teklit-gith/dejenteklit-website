@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import db from './database.js';
 
 dotenv.config();
@@ -22,6 +23,12 @@ app.use(cors({ origin: 'http://localhost:4200' }));
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+});
+
+// Optional but helpful: verify transporter on startup
+transporter.verify((err) => {
+  if (err) console.log('❌ Email transporter error:', err.message);
+  else console.log('✅ Email transporter ready');
 });
 
 // ============================================================
@@ -50,7 +57,7 @@ function requireAuth(req, res, next) {
   }
 }
 
-// ✅ NEW: Attach guest orders (user_id NULL) to a user after login/register
+// ✅ Attach guest orders (user_id NULL) to a user after login/register
 function attachGuestOrdersToUser(userId, email) {
   if (!userId || !email) return;
 
@@ -103,11 +110,12 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (req, res)
 
     // Email receipt
     if (email) {
-      await transporter.sendMail({
-        from: `"Dejen Store" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: '🎉 Payment Successful!',
-        text: `
+      try {
+        await transporter.sendMail({
+          from: `"Dejen Store" <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: '🎉 Payment Successful!',
+          text: `
 Thank you for your order!
 
 Your Items:
@@ -116,10 +124,13 @@ ${items.map(i => `${i.name} — $${i.price}`).join('\n')}
 Total: $${total}
 
 We appreciate your support!
-        `,
-      });
+          `,
+        });
 
-      console.log('📧 Confirmation email sent!');
+        console.log('📧 Confirmation email sent!');
+      } catch (err) {
+        console.log('❌ Receipt email send failed:', err.message);
+      }
     }
   }
 
@@ -154,11 +165,10 @@ app.post('/auth/register', async (req, res) => {
 
   const user = { id: result.lastInsertRowid, email };
 
-  // ✅ NEW: Merge guest orders into this new account
+  // ✅ merge guest orders
   attachGuestOrdersToUser(user.id, user.email);
 
   const token = createToken(user);
-
   res.json({ token, user });
 });
 
@@ -172,23 +182,99 @@ app.post('/auth/login', async (req, res) => {
   const ok = await bcrypt.compare(password, user.password_hash);
   if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
 
-  // ✅ NEW: Merge guest orders into this account on login
+  // ✅ merge guest orders
   attachGuestOrdersToUser(user.id, user.email);
 
   const token = createToken(user);
-
   res.json({ token, user: { id: user.id, email: user.email } });
 });
 
 // WHO AM I
 app.get('/auth/me', requireAuth, (req, res) => {
-  const user = db.prepare('SELECT id, email, first_name, last_name FROM users WHERE id = ?').get(req.user.id);
+  const user = db.prepare('SELECT id, email, first_name, last_name FROM users WHERE id = ?')
+    .get(req.user.id);
   res.json(user);
 });
 
 // ============================================================
+// 🔑 FORGOT PASSWORD (ONE VERSION ONLY)
+// ============================================================
+app.post('/auth/forgot-password', async (req, res) => {
+  console.log('🚨 FORGOT PASSWORD ROUTE HIT');
+  console.log('📩 BODY:', req.body);
+  const { email } = req.body;
+
+  // Always return same message (security)
+  const safeMsg = { message: 'If that email exists, a reset link was sent.' };
+  if (!email) return res.json(safeMsg);
+
+  const user = db.prepare('SELECT id, email FROM users WHERE email = ?').get(email);
+  if (!user) return res.json(safeMsg);
+
+  try {
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 30).toISOString(); // 30 minutes
+
+    db.prepare(`
+      INSERT INTO password_resets (user_id, token, expires_at, created_at)
+      VALUES (?, ?, ?, ?)
+    `).run(user.id, token, expiresAt, new Date().toISOString());
+
+    const resetLink = `http://localhost:4200/reset-password?token=${token}`;
+
+    console.log('🔐 Password reset requested for:', user.email);
+    console.log('🔗 RESET LINK (debug):', resetLink); // helpful while testing
+
+    await transporter.sendMail({
+      from: `"Dejen Store" <${process.env.EMAIL_USER}>`,
+      to: user.email,
+      subject: 'Reset your password',
+      html: `
+        <p>You requested a password reset.</p>
+        <p><a href="${resetLink}">Reset your password</a></p>
+        <p>This link expires in 30 minutes.</p>
+      `,
+    });
+
+    console.log('📧 Reset email sent to:', user.email);
+    return res.json(safeMsg);
+  } catch (err) {
+    console.log('❌ Reset email failed:', err.message);
+    // still return safe msg to frontend
+    return res.json(safeMsg);
+  }
+});
+
+// ============================================================
+// 🔁 RESET PASSWORD
+// ============================================================
+app.post('/auth/reset-password', async (req, res) => {
+  const { token, password } = req.body;
+
+  if (!token || !password) return res.status(400).json({ error: 'Invalid request' });
+  if (String(password).length < 8) return res.status(400).json({ error: 'Password must be at least 8 characters' });
+
+  const row = db.prepare(`
+    SELECT * FROM password_resets
+    WHERE token = ? AND used = 0
+  `).get(token);
+
+  if (!row) return res.status(400).json({ error: 'Invalid or expired token' });
+
+  if (new Date(row.expires_at).getTime() < Date.now()) {
+    return res.status(400).json({ error: 'Token expired' });
+  }
+
+  const hash = await bcrypt.hash(password, 10);
+
+  db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(hash, row.user_id);
+  db.prepare('UPDATE password_resets SET used = 1 WHERE id = ?').run(row.id);
+
+  res.json({ message: 'Password updated successfully' });
+});
+
+// ============================================================
 // 🛒 CREATE CHECKOUT SESSION
-// IMPORTANT: If logged-in, pass user_id in metadata.
 // ============================================================
 app.post('/create-checkout-session', async (req, res) => {
   const { items, email, userId } = req.body;
@@ -209,7 +295,7 @@ app.post('/create-checkout-session', async (req, res) => {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
-      customer_email: email, // allow guest or user
+      customer_email: email,
       metadata: {
         items: JSON.stringify(items),
         user_id: userId ? String(userId) : '',
@@ -239,6 +325,36 @@ app.get('/my-orders', requireAuth, (req, res) => {
   const parsed = orders.map(o => ({ ...o, items: JSON.parse(o.items) }));
   res.json(parsed);
 });
+// 👤 SINGLE ORDER (only owner can view)
+app.get('/orders/:id', requireAuth, (req, res) => {
+  const order = db.prepare(`
+    SELECT id, items, total_amount, created_at
+    FROM orders
+    WHERE id = ? AND user_id = ?
+  `).get(req.params.id, req.user.id);
+
+  if (!order) {
+    return res.status(404).json({ error: 'Order not found' });
+  }
+
+  order.items = JSON.parse(order.items);
+  res.json(order);
+});
+// 👁️ GET SINGLE ORDER (by id)
+app.get('/orders/:id', requireAuth, (req, res) => {
+  const order = db.prepare(`
+    SELECT id, items, total_amount, created_at
+    FROM orders
+    WHERE id = ? AND user_id = ?
+  `).get(req.params.id, req.user.id);
+
+  if (!order) {
+    return res.status(404).json({ error: 'Order not found' });
+  }
+
+  order.items = JSON.parse(order.items);
+  res.json(order);
+});
 
 // ============================================================
 // ✉️ SUBSCRIBE
@@ -250,12 +366,16 @@ app.post('/subscribe', async (req, res) => {
   db.prepare(`INSERT OR IGNORE INTO subscribers (email, created_at) VALUES (?, ?)`)
     .run(email, new Date().toISOString());
 
-  await transporter.sendMail({
-    from: `"Dejen Store" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: 'Welcome to Dejen Community 🎶',
-    html: `<h2>Welcome!</h2><p>You’ll get updates on new music and merch.</p>`,
-  });
+  try {
+    await transporter.sendMail({
+      from: `"Dejen Store" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: 'Welcome to Dejen Community 🎶',
+      html: `<h2>Welcome!</h2><p>You’ll get updates on new music and merch.</p>`,
+    });
+  } catch (err) {
+    console.log('❌ Subscribe email failed:', err.message);
+  }
 
   res.json({ message: 'Subscribed successfully' });
 });

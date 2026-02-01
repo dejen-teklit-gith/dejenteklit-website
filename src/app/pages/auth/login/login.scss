@@ -43,12 +43,16 @@
 }
 
 /* FORGOT PASSWORD */
-.auth-links {
-  margin-top: 0 !important;
+.forgot-link {
+  margin-top: 14px;
+  display: inline-block;
+  font-size: 13px;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #0a0a2a; /* deep black-blue */
+  padding-bottom: 2px;
 }
 
-.link-btn {
-  display: inline-block;
-  margin-top: 0;
-  font-size: 13px;
+.forgot-link:hover {
+  opacity: 0.8;
 }

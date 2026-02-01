@@ -12,10 +12,11 @@
   </div>
 
   <button type="submit">SIGN IN</button>
-
-  <div class="auth-links">
-    <button type="button" class="link-btn" (click)="forgotPassword()">
-      Forgot your password?
-    </button>
-  </div>
 </form>
+
+<!-- 🔗 OUTSIDE THE FORM -->
+<div class="auth-links">
+  <a routerLink="/forgot-password" class="forgot-link">
+    Forgot your password?
+  </a>
+</div>

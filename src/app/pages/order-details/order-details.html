@@ -1,0 +1,41 @@
+<p *ngIf="loading" class="loading">
+  Loading order…
+</p>
+
+<p *ngIf="!loading && error" class="error">
+  {{ error }}
+</p>
+
+<div *ngIf="!loading && order" class="order-details">
+
+  <header class="order-header">
+    <h1>Order #{{ order.id | number:'4.0' }}</h1>
+    <span class="status paid">Paid</span>
+  </header>
+
+  <div class="order-meta">
+    <div>
+      <span class="label">Order date</span>
+      <span>{{ order.created_at | date:'mediumDate' }}</span>
+    </div>
+
+    <div>
+      <span class="label">Total</span>
+      <span class="total">${{ order.total_amount }}</span>
+    </div>
+  </div>
+
+  <h2>Items</h2>
+
+  <div class="items">
+    <div class="item" *ngFor="let item of order.items">
+      <span class="item-name">{{ item.name }}</span>
+      <span class="item-price">${{ item.price }}</span>
+    </div>
+  </div>
+
+  <a routerLink="/account" class="back-link">
+    ← Back to My Account
+  </a>
+
+</div>

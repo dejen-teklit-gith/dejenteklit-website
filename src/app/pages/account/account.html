@@ -1,19 +1,16 @@
 <div class="account-page">
 
-  <!-- ⏳ LOADING -->
-  <p *ngIf="loading">Loading…</p>
-
   <!-- ❌ NOT LOGGED IN -->
-  <ng-container *ngIf="!loading && !user">
+  <ng-container *ngIf="!user">
 
     <div class="auth-wrapper">
 
-      <!-- LEFT: SIGN IN -->
+      <!-- LEFT: LOGIN -->
       <div class="auth-left">
         <app-login (loggedIn)="reloadAccount()"></app-login>
       </div>
 
-      <!-- VERTICAL DIVIDER -->
+      <!-- DIVIDER -->
       <div class="auth-divider"></div>
 
       <!-- RIGHT: REGISTER -->
@@ -23,19 +20,66 @@
 
     </div>
 
-    <!-- ⬅️ BOTTOM LEFT RETURN -->
+    <!-- RETURN TO STORE -->
     <div class="return-store-wrapper">
       <a routerLink="/shop" class="return-store">
         &lt; Return to Store
       </a>
     </div>
+
   </ng-container>
 
   <!-- ✅ LOGGED IN -->
-  <ng-container *ngIf="!loading && user">
-    <h1>My Account</h1>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <button (click)="logout()">Logout</button>
+  <ng-container *ngIf="user">
+
+    <!-- 🧾 ORDERS ONLY (CLEAN & FOCUSED) -->
+    <h2 class="orders-title">Your Orders</h2>
+
+    <p *ngIf="orders.length === 0" class="no-orders">
+      You don’t have any orders yet.
+    </p>
+
+    <div *ngFor="let order of orders" class="order-card">
+
+      <!-- HEADER -->
+      <div class="order-header">
+        <span class="order-number">
+          Order #{{ order.id | number:'4.0' }}
+        </span>
+
+        <span class="order-date">
+          {{ order.created_at | date:'mediumDate' }}
+        </span>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="order-summary">
+        {{ order.items[0]?.name }}
+        <span *ngIf="order.items.length > 1">
+          + {{ order.items.length - 1 }} more
+        </span>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="order-footer">
+        <span class="order-total">
+          ${{ order.total_amount }}
+        </span>
+
+        <span class="order-status paid">
+          Paid
+        </span>
+
+        <a
+          class="view-details"
+          [routerLink]="['/order', order.id]"
+        >
+          View details →
+        </a>
+      </div>
+
+    </div>
+
   </ng-container>
 
 </div>

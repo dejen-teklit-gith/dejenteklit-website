@@ -82,4 +82,27 @@ export class AuthService {
     const u = localStorage.getItem('user');
     return u ? JSON.parse(u) : null;
   }
+  async forgotPassword(email: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.post<any>(`${this.API}/auth/forgot-password`, { email })
+    );
+  }
+  async resetPassword(token: string, password: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.post<any>(`${this.API}/auth/reset-password`, {
+        token,
+        password,
+      })
+    );
+  }
+  async getOrderById(id: number): Promise<any> {
+    return await firstValueFrom(
+      this.http.get<any>(`${this.API}/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.getToken()}`,
+        },
+      })
+    );
+  }
+
 }
