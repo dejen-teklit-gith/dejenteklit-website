@@ -1,0 +1,22 @@
+.music-page {
+  padding: 4rem 2rem;
+  text-align: center;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .track {
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+  }
+}

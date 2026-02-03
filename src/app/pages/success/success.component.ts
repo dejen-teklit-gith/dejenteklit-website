@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/cart';
-import { AuthService } from '../../services/auth';
+import { CartService } from '../../service/cart.service';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-success',

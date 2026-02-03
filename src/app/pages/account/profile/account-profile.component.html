@@ -1,0 +1,32 @@
+<p>profile works!</p>
+<div class="profile-container">
+  <header class="profile-header">
+    <h1>My Profile</h1>
+    <p>Manage your personal information and account settings.</p>
+  </header>
+
+  <section class="profile-card" *ngIf="userData; else loading">
+    <div class="profile-info">
+      <div class="info-group">
+        <label>Full Name</label>
+        <p>{{ userData.name || 'N/A' }}</p>
+      </div>
+
+      <div class="info-group">
+        <label>Email Address</label>
+        <p>{{ userData.email }}</p>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button class="btn-edit">Edit Profile</button>
+      <button class="btn-logout" (click)="onLogout()">Log Out</button>
+    </div>
+  </section>
+
+  <ng-template #loading>
+    <div class="loading-spinner">
+      <p>Loading your profile details...</p>
+    </div>
+  </ng-template>
+</div>
