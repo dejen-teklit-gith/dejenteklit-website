@@ -1,0 +1,31 @@
+<div class="account-drawer" *ngIf="drawer.isOpen">
+
+  <div class="drawer-top">
+
+    <div class="profile-header">
+      <div class="avatar">
+        {{ user?.email?.charAt(0) | uppercase }}
+      </div>
+
+      <div class="user-info">
+        <strong>{{ user?.email }}</strong>
+        <span class="hint">Manage your account</span>
+      </div>
+    </div>
+
+    <nav class="drawer-nav">
+      <a routerLink="/account/app" (click)="drawer.close()">Orders</a>
+      <a routerLink="/account/app/profile" (click)="drawer.close()">My information</a>
+      <a routerLink="/account/app/addresses" (click)="drawer.close()">Addresses</a>
+      <a routerLink="/account/app/payments" (click)="drawer.close()">Payment methods</a>
+      <a routerLink="/account/app/security" (click)="drawer.close()">Account & Security</a>
+    </nav>
+
+  </div>
+
+  <!-- ✅ SINGLE FOOTER -->
+  <div class="drawer-bottom">
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+
+</div>

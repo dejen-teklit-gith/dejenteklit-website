@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CartDrawerComponent } from '../cart-drawer/cart-drawer.component';
+import { AccountDrawerComponent } from '../account-drawer/account-drawer.component';
 import { SubscribePopupComponent } from '../../components/subscribe-popup/subscribe-popup.component';
 
 import { CartService } from '../../service/cart.service';
@@ -19,6 +20,7 @@ import { SubscribeService } from '../../service/subscribe.service';
     NavbarComponent,
     FooterComponent,
     CartDrawerComponent,
+    AccountDrawerComponent, // ✅ ADD THIS
     SubscribePopupComponent,
   ],
   templateUrl: './main-layout.component.html',
@@ -32,7 +34,7 @@ export class MainLayoutComponent implements AfterViewInit {
     private subscribeService: SubscribeService
   ) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.subscribeService.open$.subscribe(() => {
       this.popup.open();
     });

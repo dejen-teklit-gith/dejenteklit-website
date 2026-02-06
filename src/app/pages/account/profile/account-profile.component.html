@@ -1,32 +1,88 @@
-<p>profile works!</p>
-<div class="profile-container">
-  <header class="profile-header">
-    <h1>My Profile</h1>
-    <p>Manage your personal information and account settings.</p>
-  </header>
+<h2>My Profile</h2>
 
-  <section class="profile-card" *ngIf="userData; else loading">
-    <div class="profile-info">
-      <div class="info-group">
-        <label>Full Name</label>
-        <p>{{ userData.name || 'N/A' }}</p>
+<p class="subtitle">
+  Manage your personal information and account settings.
+</p>
+
+<div class="profile-card" *ngIf="user">
+
+  <!-- AVATAR -->
+  <div class="avatar-section">
+
+    <div
+      class="avatar-wrapper"
+      (click)="fileInput.click()"
+      title="Change profile photo"
+    >
+      <div class="avatar">
+        <img *ngIf="avatarPreview" [src]="avatarPreview" />
+        <span *ngIf="!avatarPreview">
+          {{ user.email.charAt(0) | uppercase }}
+        </span>
       </div>
 
-      <div class="info-group">
-        <label>Email Address</label>
-        <p>{{ userData.email }}</p>
+      <!-- HOVER OVERLAY -->
+      <div class="avatar-overlay">
+        Change photo
       </div>
     </div>
 
-    <div class="profile-actions">
-      <button class="btn-edit">Edit Profile</button>
-      <button class="btn-logout" (click)="onLogout()">Log Out</button>
-    </div>
-  </section>
+    <!-- HIDDEN FILE INPUT -->
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      (change)="onAvatarSelected($event)"
+      hidden
+    />
+  </div>
 
-  <ng-template #loading>
-    <div class="loading-spinner">
-      <p>Loading your profile details...</p>
-    </div>
-  </ng-template>
+  <!-- FIRST NAME -->
+  <div class="profile-field">
+    <label>First Name</label>
+    <input type="text" [(ngModel)]="firstName" />
+  </div>
+
+  <!-- LAST NAME -->
+  <div class="profile-field">
+    <label>Last Name</label>
+    <input type="text" [(ngModel)]="lastName" />
+  </div>
+
+  <!-- EMAIL -->
+  <div class="profile-field">
+    <label>Email Address</label>
+    <input
+      type="email"
+      [(ngModel)]="email"
+      [disabled]="!allowEmailEdit"
+    />
+
+    <a
+      *ngIf="!allowEmailEdit"
+      class="change-email"
+      (click)="allowEmailEdit = true"
+    >
+      Change email
+    </a>
+
+    <small class="hint">
+      Email changes may require verification.
+    </small>
+  </div>
+
+  <!-- SAVE BUTTON -->
+  <button
+    class="save-btn"
+    (click)="save()"
+    [disabled]="!hasChanges || saving"
+  >
+    {{ saving ? 'Saving…' : 'Save changes' }}
+  </button>
+
+  <!-- STATUS MESSAGE -->
+  <p class="status" *ngIf="message">
+    {{ message }}
+  </p>
+
 </div>

@@ -1,17 +1,49 @@
-<form (ngSubmit)="submit()" class="auth-form">
+<form
+  class="auth-form"
+  (ngSubmit)="submit()"
+  novalidate
+>
+
   <h2>Sign in to your existing account</h2>
 
+  <!-- ❌ ERROR MESSAGE -->
+  <p class="error" *ngIf="error">
+    {{ error }}
+  </p>
+
   <div class="field">
-    <label>Email</label>
-    <input type="email" [(ngModel)]="email" name="email" />
+    <label for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      autocomplete="email"
+      (input)="clearError()"
+    />
   </div>
 
   <div class="field">
-    <label>Password</label>
-    <input type="password" [(ngModel)]="password" name="password" />
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+      autocomplete="current-password"
+      (input)="clearError()"
+    />
   </div>
 
-  <button type="submit">SIGN IN</button>
+  <button
+    type="submit"
+    [disabled]="loading || !email || !password"
+  >
+    {{ loading ? 'Signing in…' : 'SIGN IN' }}
+  </button>
+
 </form>
 
 <!-- 🔗 OUTSIDE THE FORM -->

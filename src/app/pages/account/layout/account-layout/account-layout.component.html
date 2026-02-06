@@ -1,36 +1,4 @@
-<aside class="account-sidebar" *ngIf="user">
-  <div class="sidebar-header">
-    <strong>Hello {{ user.first_name }}</strong>
-    <span class="email">{{ user.email }}</span>
-  </div>
-
-  <nav class="sidebar-nav">
-    <a routerLink="/account" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      Orders
-    </a>
-
-    <a routerLink="/account/profile" routerLinkActive="active">
-      My information
-    </a>
-
-    <a routerLink="/account/addresses" routerLinkActive="active">
-      Addresses
-    </a>
-
-    <a routerLink="/account/payments" routerLinkActive="active">
-      Payment methods
-    </a>
-
-    <a routerLink="/account/security" routerLinkActive="active">
-      Account & Security
-    </a>
-  </nav>
-
-  <button class="logout-btn" (click)="logout()">
-    Logout
-  </button>
-</aside>
-
+<!-- Account pages render here ONLY -->
 <main class="account-content">
   <router-outlet></router-outlet>
 </main>

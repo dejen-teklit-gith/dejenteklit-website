@@ -46,7 +46,7 @@ export class AuthService {
     return this.userSubject.value;
   }
 
-  // ---------------- USER (✅ NEW) ----------------
+  // ---------------- USER ----------------
   async getMe(): Promise<any> {
     const token = this.getToken();
     if (!token) return null;
@@ -60,6 +60,20 @@ export class AuthService {
     );
   }
 
+  // 🔥 THIS IS THE MISSING PIECE
+  updateLocalUser(updated: Partial<any>): void {
+    const current = this.userSubject.value;
+    if (!current) return;
+
+    const mergedUser = {
+      ...current,
+      ...updated,
+    };
+
+    localStorage.setItem('user', JSON.stringify(mergedUser));
+    this.userSubject.next(mergedUser);
+  }
+
   // ---------------- ORDERS ----------------
   async getMyOrders(): Promise<any[]> {
     return await firstValueFrom(
@@ -67,6 +81,32 @@ export class AuthService {
         headers: {
           Authorization: `Bearer ${this.getToken()}`,
         },
+      })
+    );
+  }
+
+  async getOrderById(id: number): Promise<any> {
+    return await firstValueFrom(
+      this.http.get<any>(`${this.API}/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${this.getToken()}`,
+        },
+      })
+    );
+  }
+
+  // ---------------- PASSWORD ----------------
+  async forgotPassword(email: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.post<any>(`${this.API}/auth/forgot-password`, { email })
+    );
+  }
+
+  async resetPassword(token: string, password: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.post<any>(`${this.API}/auth/reset-password`, {
+        token,
+        password,
       })
     );
   }
@@ -82,27 +122,4 @@ export class AuthService {
     const u = localStorage.getItem('user');
     return u ? JSON.parse(u) : null;
   }
-  async forgotPassword(email: string): Promise<any> {
-    return await firstValueFrom(
-      this.http.post<any>(`${this.API}/auth/forgot-password`, { email })
-    );
-  }
-  async resetPassword(token: string, password: string): Promise<any> {
-    return await firstValueFrom(
-      this.http.post<any>(`${this.API}/auth/reset-password`, {
-        token,
-        password,
-      })
-    );
-  }
-  async getOrderById(id: number): Promise<any> {
-    return await firstValueFrom(
-      this.http.get<any>(`${this.API}/orders/${id}`, {
-        headers: {
-          Authorization: `Bearer ${this.getToken()}`,
-        },
-      })
-    );
-  }
-
 }

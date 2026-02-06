@@ -24,19 +24,20 @@ import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './pages/auth/reset-password/reset-password.component';
 
 // 🔹 ACCOUNT
-import { AccountSecurityComponent } from './pages/account/account-security.component';
+import { AccountComponent } from './pages/account/account.component';
 import { AccountOrdersComponent } from './pages/account/orders/account-orders.component';
 import { AccountProfileComponent } from './pages/account/profile/account-profile.component';
 import { AccountAddressesComponent } from './pages/account/addresses/account-addresses.component';
 import { AccountPaymentsComponent } from './pages/account/payments/account-payments.component';
-
+import { AccountSecurityComponent } from './pages/account/security/account-security.component';
 
 export const routes: Routes = [
-  // 🌍 MAIN WEBSITE (WITH NAVBAR / FOOTER)
+  // 🌍 EVERYTHING WITH NAVBAR / FOOTER
   {
     path: '',
     component: MainLayoutComponent,
     children: [
+      // Public
       { path: '', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'gallery', component: GalleryComponent },
@@ -49,30 +50,27 @@ export const routes: Routes = [
       { path: 'cancel', component: CancelComponent },
       { path: 'order/:id', component: OrderDetailsComponent },
 
-      // 🔐 AUTH (still uses main layout)
+      // Auth
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'reset-password', component: ResetPasswordComponent },
-    ],
-  },
 
-  // 👤 ACCOUNT ENTRY (LOGIN / REGISTER GATE)
-  {
-    path: 'account',
-    component: AccountSecurityComponent,
-  },
+      // 👤 ACCOUNT ENTRY
+      { path: 'account', component: AccountComponent },
 
-  // 🧭 ACCOUNT DASHBOARD (OWN LAYOUT)
-  {
-    path: 'account/app',
-    component: AccountLayoutComponent,
-    children: [
-      { path: '', component: AccountOrdersComponent },
-      { path: 'profile', component: AccountProfileComponent },
-      { path: 'addresses', component: AccountAddressesComponent },
-      { path: 'payments', component: AccountPaymentsComponent },
-      { path: 'security', component: AccountSecurityComponent },
+      // 🧭 ACCOUNT DASHBOARD
+      {
+        path: 'account/app',
+        component: AccountLayoutComponent,
+        children: [
+          { path: '', component: AccountOrdersComponent },
+          { path: 'profile', component: AccountProfileComponent },
+          { path: 'addresses', component: AccountAddressesComponent },
+          { path: 'payments', component: AccountPaymentsComponent },
+          { path: 'security', component: AccountSecurityComponent },
+        ],
+      },
     ],
   },
 

@@ -11,28 +11,40 @@
 
   <!-- RIGHT -->
   <div class="nav-right">
+
+    <!-- 📧 SUBSCRIBE -->
     <lucide-icon
       [img]="Mail"
       (click)="openSubscribe()"
       style="cursor: pointer"
+      title="Subscribe"
     ></lucide-icon>
 
-    <lucide-icon [img]="Search"></lucide-icon>
+    <!-- 🔍 SEARCH -->
+    <lucide-icon
+      [img]="Search"
+      style="cursor: pointer"
+      title="Search"
+    ></lucide-icon>
 
-    <!-- 👤 USER ICON -->
+    <!-- 👤 ACCOUNT DRAWER -->
     <lucide-icon
       [img]="User"
-      (click)="goToAccount()"
+      (click)="toggleAccount()"
       style="cursor: pointer"
+      [title]="auth.isLoggedIn() ? 'My account' : 'Login / Register'"
     ></lucide-icon>
 
-    <!-- 🛒 CART -->
+    <!-- 🛒 CART DRAWER -->
     <div
       class="cart-wrapper"
       (click)="toggleCart()"
       [class.bump]="cartService.animateCart"
     >
-      <lucide-icon [img]="ShoppingCart"></lucide-icon>
+      <lucide-icon
+        [img]="ShoppingCart"
+        title="Cart"
+      ></lucide-icon>
 
       <span class="cart-count" *ngIf="cartService.getCount() > 0">
         {{ cartService.getCount() }}
@@ -40,7 +52,7 @@
     </div>
   </div>
 
-  <!-- 🍔 HAMBURGER -->
+  <!-- 🍔 HAMBURGER (MOBILE) -->
   <div class="hamburger" (click)="toggleMenu()">
     <lucide-icon *ngIf="!menuOpen" [img]="Menu"></lucide-icon>
     <lucide-icon *ngIf="menuOpen" [img]="X"></lucide-icon>
@@ -54,20 +66,30 @@
   <a routerLink="/music" (click)="toggleMenu()">MUSIC</a>
 
   <div class="mobile-icons">
-    <lucide-icon [img]="Mail"></lucide-icon>
-    <lucide-icon [img]="Search"></lucide-icon>
 
-    <!-- 👤 MOBILE USER -->
+    <lucide-icon
+      [img]="Mail"
+      (click)="openSubscribe(); toggleMenu()"
+      title="Subscribe"
+    ></lucide-icon>
+
+    <lucide-icon
+      [img]="Search"
+      title="Search"
+    ></lucide-icon>
+
+    <!-- 👤 MOBILE ACCOUNT -->
     <lucide-icon
       [img]="User"
-      (click)="goToAccount(); toggleMenu()"
+      (click)="toggleAccount(); toggleMenu()"
+      title="My account"
       style="cursor: pointer"
     ></lucide-icon>
 
     <!-- 🛒 MOBILE CART -->
     <div
       class="cart-wrapper"
-      (click)="cartService.toggleCart(); toggleMenu()"
+      (click)="toggleCart(); toggleMenu()"
     >
       <lucide-icon [img]="ShoppingCart"></lucide-icon>
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import {
   LucideAngularModule,
   Mail,
@@ -13,17 +13,24 @@ import {
 
 import { CartService } from '../../service/cart.service';
 import { SubscribeService } from '../../service/subscribe.service';
+import { AuthService } from '../../service/auth.service';
+import { AccountDrawerService } from '../../service/account-drawer.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    LucideAngularModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
   menuOpen = false;
 
+  // Icons
   readonly Mail = Mail;
   readonly Search = Search;
   readonly User = User;
@@ -33,10 +40,11 @@ export class NavbarComponent {
 
   constructor(
     public cartService: CartService,
-    private router: Router,
-    private subscribeService: SubscribeService
+    private router: Router, // ✅ REQUIRED
+    private subscribeService: SubscribeService,
+    public auth: AuthService,
+    private accountDrawer: AccountDrawerService
   ) {}
-
   // 📧 Subscribe popup
   openSubscribe(): void {
     this.subscribeService.open();
@@ -47,13 +55,27 @@ export class NavbarComponent {
     this.menuOpen = !this.menuOpen;
   }
 
-  // 🛒 Cart
+  // 🛒 Cart drawer
   toggleCart(): void {
     this.cartService.toggleCart();
   }
 
-  // 👤 User / Account
-  goToAccount(): void {
-    this.router.navigate(['/account']);
+  // 👤 Account drawer (CORRECT UX)
+  toggleAccount(): void {
+    if (this.auth.isLoggedIn()) {
+      this.accountDrawer.toggle();
+    } else {
+      // Not logged in → go to account entry page
+      this.accountDrawer.close();
+      window.location.href = '/account';
+    }
   }
+  goToAccount(): void {
+    if (this.auth.isLoggedIn()) {
+      this.accountDrawer.open();   // ✅ open drawer
+    } else {
+      this.router.navigate(['/account']); // ✅ go to login/register
+    }
+  }
+
 }

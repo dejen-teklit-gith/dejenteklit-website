@@ -1,0 +1,195 @@
+/* =========================
+   TITLE
+   ========================= */
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   CARD
+   ========================= */
+.profile-card {
+  max-width: 520px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* =========================
+   AVATAR
+   ========================= */
+.avatar-section {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* HOVER OVERLAY */
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.avatar-wrapper:hover .avatar-overlay {
+  opacity: 1;
+}
+
+/* =========================
+   FORM FIELDS
+   ========================= */
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.profile-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.profile-field input {
+  height: 42px;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-field input:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.profile-field input:disabled {
+  background: #f5f5f5;
+  color: #777;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+/* =========================
+   CHANGE EMAIL LINK
+   ========================= */
+.change-email {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  margin-top: 0.25rem;
+  text-decoration: none;
+}
+
+.change-email:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   SAVE BUTTON
+   ========================= */
+.save-btn {
+  margin-top: 0.5rem;
+  height: 44px;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #000;
+}
+
+.save-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.save-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* =========================
+   STATUS MESSAGE
+   ========================= */
+.status {
+  font-size: 0.85rem;
+  color: #2ecc71;
+  margin-top: 0.25rem;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+}

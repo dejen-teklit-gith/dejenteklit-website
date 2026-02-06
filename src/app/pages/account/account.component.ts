@@ -14,10 +14,10 @@ import { RegisterComponent } from '../auth/register/register.component';
     LoginComponent,
     RegisterComponent,
   ],
-  templateUrl: './account-security.component.html',
-  styleUrls: ['./account-security.component.scss'],
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss'],
 })
-export class AccountSecurityComponent implements OnInit {
+export class AccountComponent implements OnInit {
   user: any = null;
   orders: any[] = [];
   loading = true;
